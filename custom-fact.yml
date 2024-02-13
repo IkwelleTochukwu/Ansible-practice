@@ -1,0 +1,17 @@
+---
+
+- name: adding custom facts to servers
+  hosts: all
+  tasks:
+    - name: create facts.d directory
+      file:
+        path: /etc/ansible/facts.d
+        owner: ubuntu
+        mode: 775
+        state: directory
+
+    - name: copy custom.fact to the facts.d directory
+      copy:
+        src: custom.fact
+        dest: /etc/ansible/facts.d
+

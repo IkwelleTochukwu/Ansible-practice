@@ -1,0 +1,15 @@
+---
+- name: Check if apache is running
+  hosts: all
+  vars: 
+    webserver_message: "This is the webserver message"
+  tasks:
+    - name: start apache2
+      service: 
+        name: apache2
+        state: started
+
+    - name: create index.html using jinja2
+      template:
+        src: index.j2
+        dest: /var/www/html/index.html

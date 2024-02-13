@@ -1,0 +1,12 @@
+---
+- name: Greet user
+  hosts: prod
+  vars_prompt:
+    - name: username
+      prompt: enter your name
+      private: no
+
+  tasks:
+    - name: greet the user
+      debug:
+        msg: Hello {{ username }}
