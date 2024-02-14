@@ -1,0 +1,18 @@
+#Install the latest Ansible version on your control node.
+
+
+#To install ansible and set up the control node and managed nodes:
+
+#Set-up for ubuntu Linux server:
+
+#Configure the control node- sudo apt-add-repository ppa:ansible/ansible
+				
+		             #sudo apt update
+
+			     #sudo apt install -y ansible
+
+#Create ssh key in the control node and save a copy of the public key in the various managed nodes
+
+#To enable ssh access to the managed nodes through the control node.
+
+#Test control node connection with the ping module.
