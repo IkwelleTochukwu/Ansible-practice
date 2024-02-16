@@ -1,0 +1,18 @@
+---
+
+#Create a playbook that displays the command output of 'free -h' and the ipv4 address in all the managed nodes
+
+- name: Displays command output and IPv4 address
+  hosts: all
+  tasks:
+    - name: display the output of 'free -h' command
+      command: 'free -h'
+      register: command_output
+
+    - name: display command output
+      debug:
+        msg: "Command output: {{ command_output.stdout }}"
+
+    - name: display the IPv4 address of the managed nodes
+      debug:
+        msg: "The IPv4 address of {{ ansible_hostname }}: {{ ansible_default_ipv4.address }}" 
