@@ -1,0 +1,23 @@
+---
+
+#The task is to create a playbook named motd.yml that operates on all managed hosts. It should update the /etc/motd file with specific#messages based on the host group. For hosts in the dev group, the message should be "This is a dev server." For hosts in the test gro#up, it should be "This is a test server." And for hosts in the prod group, it should be "This is a prod server."
+
+- name: To overwrite the contents of the /etc/motd
+  hosts: all
+  tasks:
+    - name: copy new motd file contents
+      ansible.builtin.copy:
+        content: "{{ message }}"
+        dest: /etc/motd
+      register: motd_copy
+      changed_when: motd_copy.changed
+
+    - name: Display message if file has been overwritten
+      debug:
+        msg: "The /etc/motd file has been overwritten"
+      when: motd_copy.changed
+
+    - name: Display message if task has failed
+      debug:
+        msg: "The task failed: motd file has not been overwritten!" 
+      when: motd_copy.failed
