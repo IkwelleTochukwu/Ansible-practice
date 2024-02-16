@@ -1,0 +1,19 @@
+---
+
+#A playbook that installs a package
+#and creates a compressed archive of the files in /home of managed nodes
+
+- name: To create a compressed file and install package
+  hosts: all
+  tasks:
+    - name: Install nmap package on managed nodes
+      ansible.builtin.package:
+        name: nmap
+        state: present
+
+    - name: Create a compressed archive of files in home dir
+      community.general.archive:
+        path: /home
+        dest: /tmp/home.tar.xz
+        format: bz2
+
