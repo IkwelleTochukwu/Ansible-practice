@@ -1,0 +1,11 @@
+---
+#A playbook to install package only in CentOS linux distribution across the managed nodes
+
+- name: Install package in CentOS server
+  hosts: all
+  tasks:
+    - name: to install the nfs-utils package
+      ansible.builtin.package:
+        name: nfs-utils
+        state: present
+      when: ansible_distribution == 'CentOS'
