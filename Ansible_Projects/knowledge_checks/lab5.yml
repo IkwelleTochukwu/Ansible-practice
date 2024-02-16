@@ -1,0 +1,15 @@
+---
+
+#A playbook to run on the localhost and display even numbers using the range function
+
+- name: Using loop in ansible
+  hosts: localhost
+  tasks:
+    - name: to display even numbers (Range loop)
+      debug:
+        msg: "{{ item }}"
+      loop: "{{ range(20,41,2) }}"
+
+    - name: to display ipv4 address of thr localhost
+      debug:
+        msg: "IPv4 address of localhost: {{ ansible_default_ipv4.address }}"
