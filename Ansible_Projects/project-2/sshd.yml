@@ -1,0 +1,42 @@
+---
+
+#Create a playbook sshd.yml that runs on all managed hosts and configures the
+#SSH daemon as follows:
+#• banner is set to /etc/motd
+#• X11Forwarding is disabled
+#• MaxAuthTries is set to 3
+#Make sure that the SSH daemon is restarted after any change in its configuration.
+
+
+- name: SSH daemon configuration
+  hosts: all
+  become: yes
+  tasks:
+    - name: Set banner to /etc/motd
+      copy:
+        src: ./motd_content
+        dest: /etc/motd
+
+    - name: Disable X11 forwarding
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^X11Forwarding'
+        line: 'X11Forwarding no'
+        state: present
+      
+      notify: restart sshd service
+
+    - name: To set MaxAuthTries to 3
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^MaxAuthTries'
+        line: 'MaxAuthTries 3'
+        state: present
+
+      notify: restart sshd service
+
+  handlers:
+    - name: restart sshd service
+      service:
+        name: sshd
+        state: restarted
