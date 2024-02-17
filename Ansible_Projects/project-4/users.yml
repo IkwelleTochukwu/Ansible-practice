@@ -1,0 +1,37 @@
+---
+#create a playbook users.yml that runs on all managed nodes and uses the
+#vault file secret.yml to achieve the following:
+#• Create all the users listed in users-list.yml.
+#• Use the variable vault_key.yml file to set the users passwords.
+#• All users should be members of a supplementary group wheel.
+#• Users account passwords should use the SHA512 hash format.
+#• /bin/bash should be the default login shell for all users.
+
+
+- name: To create users and groups
+  hosts: all
+  become: yes
+  tasks:
+    - name: To read the user-list file
+      include_vars:
+        file: user-lists.yml
+        name: user_list
+
+    - name: Create group
+      group:
+        name: wheel
+        state: present
+
+    - name: Read the ansible-vault file
+      include_vars:
+        file: vault_key.yml
+        name: passwords
+
+    - name: To create users 
+      user: 
+        name: "{{ item.username }}"
+        uid: "{{ item.uid }}"
+        password: "{{ passwords[item.username] | password_hash('sha512') }}"
+        groups: wheel
+        shell: /bin/bash
+      loop: "{{ user_list }}"
