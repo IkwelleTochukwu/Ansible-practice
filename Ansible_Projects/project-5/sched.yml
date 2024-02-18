@@ -1,0 +1,18 @@
+---
+
+#A playbook sched.yml that runs on hosts in the test group and does the
+#following:
+#• A root crontab record is created that runs every hour.
+#• The cron job appends the message ”One hour has passed!” to the system log.
+
+- name: To run cron job
+  hosts: test
+  tasks:
+    - name: Add cron job to root's crontab
+      cron:
+        name: Hourly task
+        minute: "0"
+        hour: "*"
+        job: "echo 'One hour has passed' >> /var/log/syslog"
+        user: root
+        cron_file: root
