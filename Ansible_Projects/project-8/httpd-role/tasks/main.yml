@@ -1,0 +1,38 @@
+---
+# tasks file for httpd-role
+
+- name: To update cache
+  apt:
+    update-cache: yes
+
+- name: To install apache2 webserver
+  package:
+    name: apache2
+    state: present
+
+- name: To start apache2 
+  service:
+    name: apache2
+    state: started
+
+- name: Enable to start on boot
+  service:
+    name: apache2
+    enabled: yes
+
+- name: Enable http and https traffic
+  firewalld:
+    service: "{{ item }}"
+    zone: public
+    permanent: yes
+    state: enabled
+  loop:
+    - http
+    - https
+
+- name: Read index.j2 template
+  template:
+    src: index.j2
+    dest: /var/www/html/index.html
+  notify: Restart apache2
+
