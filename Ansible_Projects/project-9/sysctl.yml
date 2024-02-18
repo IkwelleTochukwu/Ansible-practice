@@ -1,0 +1,22 @@
+---
+
+- name: system storage using sysctl module
+  hosts: test
+  tasks:
+    - name: Get available RAM space
+      sysctl:
+        name: vm.memory.available
+      register: available_memory
+
+    - name: Set parameters (vm.swappiness set to 10 if RAM > 2048)
+      sysctl:
+        name: vm.swappiness
+        value: 10
+        sysctl_set: yes
+        state: present
+      when: available_memory.stdout | int > 2048
+
+    - name: Display message if available RAM is less than 2048 MB
+      debug:
+        msg: "Available RAM is less than 2048 MB"
+      when: available_memory.stdout | int < 2048
