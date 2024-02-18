@@ -1,5 +1,11 @@
 ---
 
+#A playbook archive.yml that runs on hosts in the database test group and
+#does the following:
+#• A directory /backup is created.
+#• A gzip archive of all the files in /var/log is created and stored in /backup/logs.tar.gz
+
+
 - name: To create a directory and store archived files
   hosts: test
   tasks:
