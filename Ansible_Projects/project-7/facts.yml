@@ -1,0 +1,17 @@
+---
+
+- name: Gather custom facts
+  hosts: test
+  tasks:
+    - name: copy custom.fact file to managed node
+      copy:
+        src: ./custom.fact
+        dest: /etc/ansible/facts.d
+
+    - name: Gather facts
+      setup:
+
+    - name: Print the custom facts
+      debug:
+        var: ansible_local.custom.sample_exam
+  
