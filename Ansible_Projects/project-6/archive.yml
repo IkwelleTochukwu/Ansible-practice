@@ -1,0 +1,15 @@
+---
+
+- name: To create a directory and store archived files
+  hosts: test
+  tasks:
+    - name: To create directory
+      file:
+        path: /backup
+        state: directory
+
+    - name: To archive files
+      archive:
+        path: /var/log
+        dest: /backup/log.tar.gz
+        format: gz
