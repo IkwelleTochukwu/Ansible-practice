@@ -1,5 +1,12 @@
 ---
 
+#Create a role called httpd-role. The role should satisfy the following requirements:
+#• Installs the httpd package.
+#• Starts the httpd service.
+#• Enables the httpd service to start automatically on boot.
+#• Allows http and https traffic through the firewall public zone.
+#• /var/www/html/index.html is generated from the index.j2 template file
+
 - name: Install and setup apache2 webserver
   hosts: test
   roles:
