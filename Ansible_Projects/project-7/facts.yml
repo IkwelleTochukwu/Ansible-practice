@@ -1,5 +1,9 @@
 ---
 
+#A playbook facts.yml that runs on hosts in the prod group and does the following:
+#• A custom Ansible fact server_role=apache is created that can be retrieved
+#from ansible_local.custom.sample_exam when using Ansible setup module.
+
 - name: Gather custom facts
   hosts: test
   tasks:
