@@ -1,0 +1,6 @@
+---
+
+- name: Install and setup apache2 webserver
+  hosts: test
+  roles:
+    - httpd-role
